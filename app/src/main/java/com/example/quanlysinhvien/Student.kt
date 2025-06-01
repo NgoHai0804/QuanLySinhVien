@@ -1,5 +1,4 @@
 package com.example.quanlysinhvien
-
 import java.io.Serializable
 
 data class Student(

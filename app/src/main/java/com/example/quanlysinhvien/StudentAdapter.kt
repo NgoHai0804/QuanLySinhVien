@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class StudentAdapter(
-    private val studentList: List<Student>,
+    private val studentList: List<StudentWithId>,
     private val onMenuClick: (View, Int) -> Unit
 ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
@@ -19,7 +19,6 @@ class StudentAdapter(
 
         init {
             btnMenu.setOnClickListener {
-                val adapterPosition = 0
                 onMenuClick(it, adapterPosition)
             }
         }
@@ -32,7 +31,7 @@ class StudentAdapter(
     }
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        val student = studentList[position]
+        val student = studentList[position].student
         holder.tvName.text = student.name
         holder.tvMSSV.text = student.mssv
     }
