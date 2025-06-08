@@ -10,22 +10,24 @@ class AddStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student)
 
-        val db = StudentDatabase(this)
+        val db = StudentDatabase.getInstance(this)
+        val dao = db.studentDao()
 
-        val editName = findViewById<EditText>(R.id.editName)
-        val editMSSV = findViewById<EditText>(R.id.editMSSV)
-        val editEmail = findViewById<EditText>(R.id.editEmail)
-        val editPhone = findViewById<EditText>(R.id.editPhone)
-        val btnSave = findViewById<Button>(R.id.btnSave)
+        val name = findViewById<EditText>(R.id.editName)
+        val mssv = findViewById<EditText>(R.id.editMSSV)
+        val email = findViewById<EditText>(R.id.editEmail)
+        val phone = findViewById<EditText>(R.id.editPhone)
+        val saveBtn = findViewById<Button>(R.id.btnSave)
 
-        btnSave.setOnClickListener {
-            val student = Student(
-                name = editName.text.toString(),
-                mssv = editMSSV.text.toString(),
-                email = editEmail.text.toString(),
-                phone = editPhone.text.toString()
+        saveBtn.setOnClickListener {
+            dao.insert(
+                Student(
+                    name = name.text.toString(),
+                    mssv = mssv.text.toString(),
+                    email = email.text.toString(),
+                    phone = phone.text.toString()
+                )
             )
-            db.insertStudent(student)
             finish()
         }
     }

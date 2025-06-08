@@ -10,28 +10,30 @@ class UpdateStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student)
 
-        val db = StudentDatabase(this)
+        val db = StudentDatabase.getInstance(this)
+        val dao = db.studentDao()
 
-        val id = intent.getLongExtra("id", -1)
         val student = intent.getSerializableExtra("student") as? Student ?: return
 
-        val editName = findViewById<EditText>(R.id.editName)
-        val editMSSV = findViewById<EditText>(R.id.editMSSV)
-        val editEmail = findViewById<EditText>(R.id.editEmail)
-        val editPhone = findViewById<EditText>(R.id.editPhone)
-        val btnSave = findViewById<Button>(R.id.btnSave)
+        val name = findViewById<EditText>(R.id.editName)
+        val mssv = findViewById<EditText>(R.id.editMSSV)
+        val email = findViewById<EditText>(R.id.editEmail)
+        val phone = findViewById<EditText>(R.id.editPhone)
+        val saveBtn = findViewById<Button>(R.id.btnSave)
 
-        editName.setText(student.name)
-        editMSSV.setText(student.mssv)
-        editEmail.setText(student.email)
-        editPhone.setText(student.phone)
+        name.setText(student.name)
+        mssv.setText(student.mssv)
+        email.setText(student.email)
+        phone.setText(student.phone)
 
-        btnSave.setOnClickListener {
-            student.name = editName.text.toString()
-            student.mssv = editMSSV.text.toString()
-            student.email = editEmail.text.toString()
-            student.phone = editPhone.text.toString()
-            db.updateStudent(student, id)
+        saveBtn.setOnClickListener {
+            val updated = student.copy(
+                name = name.text.toString(),
+                mssv = mssv.text.toString(),
+                email = email.text.toString(),
+                phone = phone.text.toString()
+            )
+            dao.update(updated)
             finish()
         }
     }
