@@ -12,3 +12,4 @@ data class Student(
     val email: String,
     val phone: String
 ) : Serializable
+
